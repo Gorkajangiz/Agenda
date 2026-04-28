@@ -1,0 +1,826 @@
+package Ejecutable;
+
+import Exceptions.ExistenciaException;
+import Gestor.Agenda;
+import java.awt.Dimension;
+import java.awt.FileDialog;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/AWTForms/Frame.java to edit this template
+ */
+/**
+ *
+ * @author Multi
+ */
+public class MiVentana extends java.awt.Frame {
+
+    /**
+     * Creates new form frame
+     */
+    Agenda ag;
+    FileDialog dialguardar;
+    FileDialog dialabrir;
+    VentanaListados vl;
+    VentanaExcepciones ve;
+    Confirmacion v3;
+
+    public MiVentana() {
+        initComponents();
+        Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        int h = (int) screenSize.getHeight();
+        int w = (int) screenSize.getWidth();
+        this.setLocation(h / 2 + 100, w / 4 - 100);
+        dialguardar = new FileDialog(this, "Guardar Fichero", FileDialog.SAVE);
+        dialguardar.setVisible(false);
+        dialguardar.setDirectory("C:\\Users\\Multi\\Desktop");
+        ag = new Agenda();
+        vl = new VentanaListados(this, false);
+        vl.setVisible(false);
+        ve = new VentanaExcepciones(this, true);
+        ve.setVisible(false);
+        v3 = new Confirmacion(this, true);
+        v3.setVisible(false);
+        //Asignaciones
+        EditarLaAgenda.setText("Editar La Agenda");
+        EditarLaAgenda.setVisible(false);
+        PanelDatos.setVisible(false);
+        Editar.setEnabled(false);
+        Eliminar.setEnabled(false);
+        Añadir.setEnabled(false);
+        EspaniolIdioma.setState(true);
+        this.actualizar();
+    }
+
+    private void actualizar() {
+        ListaContactos.removeAll();
+        ArrayList<String> nombres = null;
+        try {
+            nombres = ag.getNombres();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                System.out.println("Mensaje: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("Código: " + ex.getErrorCode());
+                ex = ex.getNextException();
+                System.out.println("");
+            }
+        }
+        if (EspaniolIdioma.getState()) {
+            ListaContactos.add("<NUEVO>");
+        } else {
+            ListaContactos.add("<New>");
+        }
+        for (String n : nombres) {
+            ListaContactos.add(n);
+        }
+    }
+
+    private void español() {
+        LContactos.setText("Contactos");
+        EditarLaAgenda.setText("Editar la agenda");
+        Archivo.setLabel("Archivo");
+        Listas.setLabel("Listas");
+        Opciones.setLabel("Opciones");
+        GuardarMI.setLabel("Guardar...");
+        ImportarMI.setLabel("Importar...");
+        ListarNombres.setLabel("Listar por Nombre");
+        ListarFechas.setLabel("Listar por Fecha");
+        ListarNombresMenu.setLabel("En Pantalla...");
+        ListarNombresFichero.setLabel("En Fichero...");
+        AmigoCheckbox.setLabel("Amigo");
+        ProfesionalCheckbox.setLabel("Profesional");
+        Nombre.setText("Nombre:");
+        Telefono.setText("Teléfono:");
+        if (ProfesionalCheckbox.getState()) {
+            Fecha.setText("Comentario:");
+        } else {
+            Fecha.setText("Fecha:");
+        }
+        Añadir.setLabel("Añadir");
+        Editar.setLabel("Editar");
+        Eliminar.setLabel("Eliminar");
+        Opciones.setLabel("Opciones");
+        Idioma.setLabel("Idioma");
+        EspaniolIdioma.setLabel("Español");
+        InglesIdioma.setLabel("Inglés");
+    }
+
+    private void ingles() {
+        LContactos.setText("Contacts");
+        EditarLaAgenda.setText("Edit the Contact Book");
+        Archivo.setLabel("File");
+        Listas.setLabel("List");
+        Opciones.setLabel("Options");
+        GuardarMI.setLabel("Save...");
+        ImportarMI.setLabel("Import...");
+        ListarNombres.setLabel("List by Name");
+        ListarFechas.setLabel("List by Date");
+        ListarNombresMenu.setLabel("On Screen...");
+        ListarNombresFichero.setLabel("On File...");
+        AmigoCheckbox.setLabel("Friend");
+        ProfesionalCheckbox.setLabel("Profesional");
+        Nombre.setText("Name:");
+        Telefono.setText("Phone:");
+        if (ProfesionalCheckbox.getState()) {
+            Fecha.setText("Comment:");
+        } else {
+            Fecha.setText("Date:");
+        }
+        Añadir.setLabel("Add");
+        Editar.setLabel("Edit");
+        Eliminar.setLabel("Delete");
+        Idioma.setLabel("Language");
+        EspaniolIdioma.setLabel("Spanish");
+        InglesIdioma.setLabel("English");
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        LContactos = new java.awt.Label();
+        PanelBotones = new java.awt.Panel();
+        Añadir = new java.awt.Button();
+        Editar = new java.awt.Button();
+        Eliminar = new java.awt.Button();
+        PanelCentral = new java.awt.Panel();
+        PanelCentralIzda = new java.awt.Panel();
+        ListaContactos = new java.awt.List();
+        panel1 = new java.awt.Panel();
+        panel2 = new java.awt.Panel();
+        panel3 = new java.awt.Panel();
+        PanelCentralDcha = new java.awt.Panel();
+        Mensaje = new java.awt.Label();
+        EditarLaAgenda = new java.awt.Label();
+        PanelDatos = new java.awt.Panel();
+        Nombre = new java.awt.Label();
+        InsertNombre = new java.awt.TextField();
+        Telefono = new java.awt.Label();
+        Fecha = new java.awt.Label();
+        InsertTelefono = new java.awt.TextField();
+        InsertFecha = new java.awt.TextField();
+        Relleno1 = new java.awt.Panel();
+        Relleno2 = new java.awt.Panel();
+        AmigoCheckbox = new java.awt.Checkbox();
+        ProfesionalCheckbox = new java.awt.Checkbox();
+        Relleno3 = new java.awt.Panel();
+        menuBar1 = new java.awt.MenuBar();
+        Archivo = new java.awt.Menu();
+        GuardarMI = new java.awt.MenuItem();
+        ImportarMI = new java.awt.MenuItem();
+        Listas = new java.awt.Menu();
+        ListarNombres = new java.awt.Menu();
+        ListarNombresMenu = new java.awt.MenuItem();
+        ListarNombresFichero = new java.awt.MenuItem();
+        ListarFechas = new java.awt.Menu();
+        ListarFechasMenu = new java.awt.MenuItem();
+        ListarFechasFichero = new java.awt.MenuItem();
+        Opciones = new java.awt.Menu();
+        Idioma = new java.awt.Menu();
+        EspaniolIdioma = new java.awt.CheckboxMenuItem();
+        InglesIdioma = new java.awt.CheckboxMenuItem();
+
+        LContactos.setAlignment(java.awt.Label.CENTER);
+        LContactos.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        LContactos.setText("Contactos");
+
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setFocusCycleRoot(false);
+        setLocation(new java.awt.Point(0, 0));
+        setLocationRelativeTo(null);
+        setMinimumSize(new java.awt.Dimension(500, 400));
+        setName("Agenda V1.0"); // NOI18N
+        setResizable(false);
+        setTitle("Agenda de Contactos - Gorka");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                exitForm(evt);
+            }
+        });
+
+        PanelBotones.setBackground(new java.awt.Color(204, 204, 204));
+        PanelBotones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
+
+        Añadir.setBackground(new java.awt.Color(204, 204, 204));
+        Añadir.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        Añadir.setLabel("Añadir");
+        Añadir.setPreferredSize(new java.awt.Dimension(120, 24));
+        Añadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AñadirActionPerformed(evt);
+            }
+        });
+        PanelBotones.add(Añadir);
+
+        Editar.setBackground(new java.awt.Color(204, 204, 204));
+        Editar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        Editar.setLabel("Editar");
+        Editar.setPreferredSize(new java.awt.Dimension(120, 24));
+        Editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditarActionPerformed(evt);
+            }
+        });
+        PanelBotones.add(Editar);
+
+        Eliminar.setBackground(new java.awt.Color(204, 204, 204));
+        Eliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Eliminar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        Eliminar.setLabel("Eliminar");
+        Eliminar.setPreferredSize(new java.awt.Dimension(120, 24));
+        Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EliminarActionPerformed(evt);
+            }
+        });
+        PanelBotones.add(Eliminar);
+
+        add(PanelBotones, java.awt.BorderLayout.SOUTH);
+
+        PanelCentral.setLayout(new java.awt.GridLayout(1, 2));
+
+        PanelCentralIzda.setLayout(new java.awt.BorderLayout());
+
+        ListaContactos.setPreferredSize(new java.awt.Dimension(40, 80));
+        ListaContactos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ListaContactosItemStateChanged(evt);
+            }
+        });
+        PanelCentralIzda.add(ListaContactos, java.awt.BorderLayout.CENTER);
+        PanelCentralIzda.add(panel1, java.awt.BorderLayout.WEST);
+        PanelCentralIzda.add(panel2, java.awt.BorderLayout.EAST);
+        PanelCentralIzda.add(panel3, java.awt.BorderLayout.SOUTH);
+
+        PanelCentral.add(PanelCentralIzda);
+
+        PanelCentralDcha.setLayout(new java.awt.BorderLayout());
+
+        Mensaje.setAlignment(java.awt.Label.CENTER);
+        Mensaje.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        Mensaje.setPreferredSize(new java.awt.Dimension(30, 20));
+        PanelCentralDcha.add(Mensaje, java.awt.BorderLayout.SOUTH);
+
+        EditarLaAgenda.setAlignment(java.awt.Label.CENTER);
+        EditarLaAgenda.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        EditarLaAgenda.setText("Editar la agenda");
+        PanelCentralDcha.add(EditarLaAgenda, java.awt.BorderLayout.NORTH);
+
+        PanelDatos.setLayout(new java.awt.GridBagLayout());
+
+        Nombre.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        Nombre.setText("Nombre:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        PanelDatos.add(Nombre, gridBagConstraints);
+
+        InsertNombre.setPreferredSize(new java.awt.Dimension(100, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        PanelDatos.add(InsertNombre, gridBagConstraints);
+
+        Telefono.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        Telefono.setText("Teléfono:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        PanelDatos.add(Telefono, gridBagConstraints);
+
+        Fecha.setAlignment(java.awt.Label.CENTER);
+        Fecha.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        Fecha.setPreferredSize(new java.awt.Dimension(90, 20));
+        Fecha.setText("Comentario:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        PanelDatos.add(Fecha, gridBagConstraints);
+
+        InsertTelefono.setPreferredSize(new java.awt.Dimension(100, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        PanelDatos.add(InsertTelefono, gridBagConstraints);
+
+        InsertFecha.setPreferredSize(new java.awt.Dimension(100, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        PanelDatos.add(InsertFecha, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        PanelDatos.add(Relleno1, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        PanelDatos.add(Relleno2, gridBagConstraints);
+
+        AmigoCheckbox.setLabel(" Amigo");
+        AmigoCheckbox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                AmigoCheckboxItemStateChanged(evt);
+            }
+        });
+        PanelDatos.add(AmigoCheckbox, new java.awt.GridBagConstraints());
+
+        ProfesionalCheckbox.setLabel(" Profesional");
+        ProfesionalCheckbox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ProfesionalCheckboxItemStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        PanelDatos.add(ProfesionalCheckbox, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        PanelDatos.add(Relleno3, gridBagConstraints);
+
+        PanelCentralDcha.add(PanelDatos, java.awt.BorderLayout.CENTER);
+
+        PanelCentral.add(PanelCentralDcha);
+
+        add(PanelCentral, java.awt.BorderLayout.CENTER);
+
+        Archivo.setLabel("Archivo");
+
+        GuardarMI.setLabel("Guardar");
+        GuardarMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarMIActionPerformed(evt);
+            }
+        });
+        Archivo.add(GuardarMI);
+
+        ImportarMI.setLabel("Importar");
+        ImportarMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ImportarMIActionPerformed(evt);
+            }
+        });
+        Archivo.add(ImportarMI);
+
+        menuBar1.add(Archivo);
+
+        Listas.setLabel("Listar");
+
+        ListarNombres.setLabel("Listar por Nombre");
+        ListarNombres.setName("");
+
+        ListarNombresMenu.setLabel("En Pantalla...");
+        ListarNombresMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ListarNombresMenuActionPerformed(evt);
+            }
+        });
+        ListarNombres.add(ListarNombresMenu);
+
+        ListarNombresFichero.setLabel("En Fichero...");
+        ListarNombresFichero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ListarNombresFicheroActionPerformed(evt);
+            }
+        });
+        ListarNombres.add(ListarNombresFichero);
+
+        Listas.add(ListarNombres);
+
+        ListarFechas.setLabel("Listar por Fecha");
+
+        ListarFechasMenu.setLabel("En Pantalla...");
+        ListarFechasMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ListarFechasMenuActionPerformed(evt);
+            }
+        });
+        ListarFechas.add(ListarFechasMenu);
+
+        ListarFechasFichero.setLabel("En Fichero...");
+        ListarFechasFichero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ListarFechasFicheroActionPerformed(evt);
+            }
+        });
+        ListarFechas.add(ListarFechasFichero);
+
+        Listas.add(ListarFechas);
+
+        menuBar1.add(Listas);
+
+        Opciones.setLabel("Opciones");
+
+        Idioma.setLabel("Idioma");
+
+        EspaniolIdioma.setLabel("Español");
+        EspaniolIdioma.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                EspaniolIdiomaItemStateChanged(evt);
+            }
+        });
+        Idioma.add(EspaniolIdioma);
+
+        InglesIdioma.setLabel("Inglés");
+        InglesIdioma.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                InglesIdiomaItemStateChanged(evt);
+            }
+        });
+        Idioma.add(InglesIdioma);
+
+        Opciones.add(Idioma);
+
+        menuBar1.add(Opciones);
+
+        setMenuBar(menuBar1);
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * Exit the Application
+     */
+    private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
+        System.exit(0);
+    }//GEN-LAST:event_exitForm
+
+    private void AñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AñadirActionPerformed
+        v3.setConfirm("añadir?");
+        v3.setVisible(true);
+        if (v3.confirm.equals(true)) {
+            String nombre = InsertNombre.getText();
+            Integer telefono = null;
+            try {
+                String t = InsertTelefono.getText();
+                if (t.isEmpty()) {
+                    telefono = 0;
+                } else {
+                    telefono = Integer.valueOf(InsertTelefono.getText());
+                }
+                if (ProfesionalCheckbox.getState()) {
+                    String especial = null;
+                    if (InsertFecha.getText().isEmpty()) {
+                        especial = "Bakugan";
+                    } else {
+                        especial = InsertFecha.getText();
+                    }
+                    ag.alta(nombre, telefono, null, especial, false);
+                } else {
+                    String especial;
+                    if (InsertFecha.getText().isEmpty()) {
+                        especial = "01/01/2001";
+                    } else {
+                        especial = InsertFecha.getText();
+                    }
+                    ag.alta(nombre, telefono, especial, null, true);
+                }
+                this.actualizar();
+                Eliminar.setEnabled(false);
+                Editar.setEnabled(false);
+                Añadir.setEnabled(false);
+                InsertNombre.setText("");
+                InsertTelefono.setText("");
+                InsertFecha.setText("");
+                InsertNombre.setEnabled(false);
+                InsertTelefono.setEnabled(false);
+                InsertFecha.setEnabled(false);
+                PanelDatos.setVisible(false);
+            } catch (ExistenciaException ex) {
+                ve.setContenido("Ha ocurrido el siguiente error: " + "\n" + ex + "\n" + "¿Desea cerrar la agenda?");
+                ve.setCoordenadas(this.getX(), this.getY());
+                ve.setVisible(true);
+            } catch (NumberFormatException ex) {
+                ve.setContenido("Ha ocurrido el siguiente error: " + "\n" + ex + "\n" + "¿Desea cerrar la agenda?");
+                ve.setCoordenadas(this.getX(), this.getY());
+                ve.setVisible(true);
+            } catch (java.sql.SQLException ex) {
+                ve.setContenido("El nombre introducido es demasiado largo ¿Desea cerrar la agenda?");
+                ve.setCoordenadas(this.getX(), this.getY());
+                ve.setVisible(true);
+            } catch (Exception ex) {
+                ve.setContenido("Ha ocurrido el siguiente error: " + "\n" + ex + "\n" + "¿Desea cerrar la agenda?");
+                ve.setCoordenadas(this.getX(), this.getY());
+                ve.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_AñadirActionPerformed
+
+    private void ListaContactosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ListaContactosItemStateChanged
+        PanelDatos.setVisible(true);
+        Mensaje.setVisible(false);
+        EditarLaAgenda.setVisible(true);
+        InsertTelefono.setEnabled(true);
+        InsertFecha.setEnabled(true);
+        int posicion = ListaContactos.getSelectedIndex();
+        if (posicion == 0) {
+            InsertNombre.setText("");
+            InsertTelefono.setText("");
+            InsertFecha.setText("");
+            InsertNombre.setEnabled(true);
+            InsertTelefono.setEnabled(true);
+            InsertFecha.setEnabled(true);
+            AmigoCheckbox.setEnabled(true);
+            ProfesionalCheckbox.setEnabled(true);
+            AmigoCheckbox.setState(false);
+            ProfesionalCheckbox.setState(false);
+            Eliminar.setEnabled(false);
+            Editar.setEnabled(false);
+            Añadir.setEnabled(true);
+        } else {
+            String n = ListaContactos.getSelectedItem();
+            try {
+                ArrayList<String> datos = ag.cogerDatos(n);
+                InsertNombre.setText(datos.get(0));
+                if (Integer.parseInt(datos.get(1)) == 0) {
+                    InsertTelefono.setText("");
+                } else {
+                    InsertTelefono.setText(datos.get(1));
+                }
+                if (datos.get(3).equals("AMIGO")) {
+                    if (datos.get(2).equals("01/01/2001")) {
+                        InsertFecha.setText("");
+                    } else {
+                        InsertFecha.setText(datos.get(2));
+                    }
+                    AmigoCheckbox.setState(true);
+                    ProfesionalCheckbox.setState(false);
+                    if (EspaniolIdioma.getState()) {
+                        Fecha.setText("Fecha:");
+                    } else {
+                        Fecha.setText("Date:");
+                    }
+                } else {
+                    if (datos.get(2).equals("Bakugan")) {
+                        InsertFecha.setText("");
+                    } else {
+                        InsertFecha.setText(datos.get(2));
+                    }
+                    AmigoCheckbox.setState(false);
+                    ProfesionalCheckbox.setState(true);
+                    if (EspaniolIdioma.getState()) {
+                        Fecha.setText("Comentario:");
+                    } else {
+                        Fecha.setText("Comment:");
+                    }
+                }
+                ProfesionalCheckbox.setEnabled(false);
+                AmigoCheckbox.setEnabled(false);
+                InsertNombre.setEnabled(false);
+                Añadir.setEnabled(false);
+                Eliminar.setEnabled(true);
+                Editar.setEnabled(true);
+            } catch (Exception ex) {
+                ex.getMessage();
+            }
+        }
+    }//GEN-LAST:event_ListaContactosItemStateChanged
+
+    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
+        v3.setConfirm("eliminar?");
+        v3.setVisible(true);
+        if (v3.confirm.equals(true)) {
+            String n = InsertNombre.getText();
+            try {
+                ag.borrar(n);
+                InsertTelefono.setText("");
+                InsertFecha.setText("");
+                InsertNombre.setText("");
+                this.actualizar();
+                Eliminar.setEnabled(false);
+                Editar.setEnabled(false);
+                Añadir.setEnabled(false);
+                InsertNombre.setText("");
+                InsertTelefono.setText("");
+                InsertFecha.setText("");
+                PanelDatos.setVisible(false);
+                EditarLaAgenda.setVisible(false);
+                Mensaje.setLocation(WIDTH, PanelDatos.getSize().height / 2);
+                Mensaje.setText("Has eliminado un contacto");
+                Mensaje.setVisible(true);
+                Eliminar.setEnabled(false);
+                Editar.setEnabled(false);
+            } catch (Exception ex) {
+                ve.setContenido("Ha ocurrido el siguiente error: " + "\n" + ex + "\n" + "¿Desea cerrar la agenda?");
+                ve.setCoordenadas(this.getX(), this.getY());
+                ve.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_EliminarActionPerformed
+
+    private void ProfesionalCheckboxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ProfesionalCheckboxItemStateChanged
+        if (ProfesionalCheckbox.getState()) {
+            AmigoCheckbox.setState(false);
+            Fecha.setText("Comentario:");
+        }
+    }//GEN-LAST:event_ProfesionalCheckboxItemStateChanged
+
+    private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
+        v3.setConfirm("modificar?");
+        v3.setVisible(true);
+        if (v3.confirm.equals(true)) {
+            String n = InsertNombre.getText();
+            try {
+                ArrayList<String> datos = ag.cogerDatos(n);
+                Mensaje.setText("Se ha editado " + InsertNombre.getText());
+                String k;
+                String q;
+                if (InsertTelefono.getText().isEmpty()) {
+                    k = "0";
+                } else {
+                    k = InsertTelefono.getText();
+                }
+
+                if (datos.get(3).equals("AMIGO")) {
+                    if (InsertFecha.getText().isEmpty()) {
+                        q = "01/01/2001";
+                    } else {
+                        q = InsertFecha.getText();
+                    }
+                    ag.editar(datos.get(0), k, q, null, true);
+                } else if (datos.get(3).equals("PROFESIONAL")) {
+                    if (InsertFecha.getText().isEmpty()) {
+                        q = "Bakugan";
+                    } else {
+                        q = InsertFecha.getText();
+                    }
+                    ag.editar(datos.get(0), k, null, q, false);
+                }
+                this.actualizar();
+                Mensaje.setText("Se ha editado el contacto");
+                Mensaje.setVisible(true);
+                Mensaje.setLocation(WIDTH, PanelDatos.getSize().height);
+            } catch (Exception ex) {
+                ve.setContenido("Ha ocurrido el siguiente error: " + ex + " ¿Desea cerrar la agenda?");
+                ve.setCoordenadas(this.getX(), this.getY());
+                ve.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_EditarActionPerformed
+
+    private void AmigoCheckboxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_AmigoCheckboxItemStateChanged
+        if (AmigoCheckbox.getState()) {
+            ProfesionalCheckbox.setState(false);
+            Fecha.setText("Fecha:");
+        }
+    }//GEN-LAST:event_AmigoCheckboxItemStateChanged
+
+    private void GuardarMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarMIActionPerformed
+        try {
+            dialguardar.setVisible(true);
+            String directorio = dialguardar.getDirectory() + "\\" + dialguardar.getFile();
+            ag.guardarAgenda(directorio);
+        } catch (IOException ex) {
+            ve.setContenido("Ha ocurrido el siguiente error: " + "\n" + ex + "\n" + "¿Desea cerrar la agenda?");
+            ve.setCoordenadas(this.getX(), this.getY());
+            ve.setVisible(true);
+        }
+    }//GEN-LAST:event_GuardarMIActionPerformed
+
+    private void ImportarMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportarMIActionPerformed
+        dialabrir.setVisible(true);
+        String directorio = dialabrir.getDirectory() + "\\" + dialabrir.getFile();
+        try {
+            ag.importar(directorio);
+        } catch (ClassNotFoundException ex) {
+            ve.setContenido("Ha ocurrido el siguiente error: " + "\n" + ex + "\n" + "¿Desea cerrar la agenda?");
+            ve.setCoordenadas(this.getX(), this.getY());
+            ve.setVisible(true);
+        } catch (Exception ex) {
+            ve.setContenido("Ha ocurrido el siguiente error: " + "\n" + ex + "\n" + "¿Desea cerrar la agenda?");
+            ve.setCoordenadas(this.getX(), this.getY());
+            ve.setVisible(true);
+        }
+        this.actualizar();
+    }//GEN-LAST:event_ImportarMIActionPerformed
+
+    private void ListarNombresMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarNombresMenuActionPerformed
+        String cadena = null;
+        try {
+            cadena = ag.Recorrer();
+        } catch (Exception ex) {
+            ve.setContenido("Ha ocurrido el siguiente error: " + "\n" + ex + "\n" + "¿Desea cerrar la agenda?");
+            ve.setCoordenadas(this.getX(), this.getY());
+            ve.setVisible(true);
+        }
+        vl.setContenido(cadena);
+        vl.setVisible(true);
+    }//GEN-LAST:event_ListarNombresMenuActionPerformed
+
+    private void ListarNombresFicheroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarNombresFicheroActionPerformed
+        dialguardar.setVisible(true);
+        String directorio = dialguardar.getDirectory() + "\\" + dialguardar.getFile();
+        try {
+            ag.listarExterno(directorio, "A");
+        } catch (Exception ex) {
+            ve.setContenido("Ha ocurrido el siguiente error: " + "\n" + ex + "\n" + "¿Desea cerrar la agenda?");
+            ve.setCoordenadas(this.getX(), this.getY());
+            ve.setVisible(true);
+        }
+        this.actualizar();
+    }//GEN-LAST:event_ListarNombresFicheroActionPerformed
+
+    private void ListarFechasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarFechasMenuActionPerformed
+        String cadena = null;
+        try {
+            cadena = ag.RecorrerPorFecha();
+        } catch (Exception ex) {
+            ve.setContenido("Ha ocurrido el siguiente error: " + "\n" + ex + "\n" + "¿Desea cerrar la agenda?");
+            ve.setCoordenadas(this.getX(), this.getY());
+            ve.setVisible(true);
+        }
+        vl.setContenido(cadena);
+        vl.setVisible(true);
+    }//GEN-LAST:event_ListarFechasMenuActionPerformed
+
+    private void ListarFechasFicheroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarFechasFicheroActionPerformed
+        dialguardar.setVisible(true);
+        String directorio = dialguardar.getDirectory() + "\\" + dialguardar.getFile();
+        try {
+            ag.listarExterno(directorio, "F");
+        } catch (Exception ex) {
+            ve.setContenido("Ha ocurrido el siguiente error: " + "\n" + ex + "\n" + "¿Desea cerrar la agenda?");
+            ve.setCoordenadas(this.getX(), this.getY());
+            ve.setVisible(true);
+        }
+        this.actualizar();
+    }//GEN-LAST:event_ListarFechasFicheroActionPerformed
+
+    private void InglesIdiomaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_InglesIdiomaItemStateChanged
+        this.ingles();
+        EspaniolIdioma.setState(false);
+        this.actualizar();
+    }//GEN-LAST:event_InglesIdiomaItemStateChanged
+
+    private void EspaniolIdiomaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_EspaniolIdiomaItemStateChanged
+        InglesIdioma.setState(false);
+        this.actualizar();
+    }//GEN-LAST:event_EspaniolIdiomaItemStateChanged
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MiVentana().setVisible(true);
+            }
+        });
+    }
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.Checkbox AmigoCheckbox;
+    private java.awt.Menu Archivo;
+    private java.awt.Button Añadir;
+    private java.awt.Button Editar;
+    private java.awt.Label EditarLaAgenda;
+    private java.awt.Button Eliminar;
+    private java.awt.CheckboxMenuItem EspaniolIdioma;
+    private java.awt.Label Fecha;
+    private java.awt.MenuItem GuardarMI;
+    private java.awt.Menu Idioma;
+    private java.awt.MenuItem ImportarMI;
+    private java.awt.CheckboxMenuItem InglesIdioma;
+    private java.awt.TextField InsertFecha;
+    private java.awt.TextField InsertNombre;
+    private java.awt.TextField InsertTelefono;
+    private java.awt.Label LContactos;
+    private java.awt.List ListaContactos;
+    private java.awt.Menu ListarFechas;
+    private java.awt.MenuItem ListarFechasFichero;
+    private java.awt.MenuItem ListarFechasMenu;
+    private java.awt.Menu ListarNombres;
+    private java.awt.MenuItem ListarNombresFichero;
+    private java.awt.MenuItem ListarNombresMenu;
+    private java.awt.Menu Listas;
+    private java.awt.Label Mensaje;
+    private java.awt.Label Nombre;
+    private java.awt.Menu Opciones;
+    private java.awt.Panel PanelBotones;
+    private java.awt.Panel PanelCentral;
+    private java.awt.Panel PanelCentralDcha;
+    private java.awt.Panel PanelCentralIzda;
+    private java.awt.Panel PanelDatos;
+    private java.awt.Checkbox ProfesionalCheckbox;
+    private java.awt.Panel Relleno1;
+    private java.awt.Panel Relleno2;
+    private java.awt.Panel Relleno3;
+    private java.awt.Label Telefono;
+    private java.awt.MenuBar menuBar1;
+    private java.awt.Panel panel1;
+    private java.awt.Panel panel2;
+    private java.awt.Panel panel3;
+    // End of variables declaration//GEN-END:variables
+}
